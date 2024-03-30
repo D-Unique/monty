@@ -76,7 +76,7 @@ void _pint(stack_t **head, unsigned int c)
 	if (*head == NULL)
 	{
 		dprintf(2, "L%u: ", c);
-		dprintf(2, "Can't pint, stack is empty\n");
+		dprintf(2, "can't pint, stack empty\n");
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
@@ -97,7 +97,7 @@ void _pop(stack_t **head, unsigned int c)
 
 	if (head == NULL || *head == NULL)
 	{
-		dprintf(2, "L%u: Can't pop an empty stack\n", c);
+		dprintf(2, "L%u: can't pop an empty stack\n", c);
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
@@ -128,7 +128,7 @@ void _swap(stack_t **head, unsigned int c)
 
 	if (n < 2)
 	{
-		dprintf(2, "L%u: Can't swap stack. Stack is too short\n", c)
+		dprintf(2, "L%u: can't swap, stack too short\n", c)
 			free_globalvar();
 		exit(EXIT_FAILURE);
 	}
