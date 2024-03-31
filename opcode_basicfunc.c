@@ -140,4 +140,3 @@ void _swap(stack_t **head, unsigned int c)
 	(*head)->next = buf;
 	(*head)->prev = NULL;
 }
-
