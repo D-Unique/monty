@@ -47,8 +47,8 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct glob - the global structure to use in the functions
- * @quest:  flag that changes alternate queue and stack as required
+ * struct global_s - the global structure to use in the functions
+ * @quest:  flag that alternate between queue and stack as required
  * @line: current line
  * @arg: second parameter on the current line
  * @head: doubly linked list
@@ -58,7 +58,7 @@ typedef struct instruction_s
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO project
  */
-typedef struct globals
+typedef struct global_s
 {
 	int quest;
 	unsigned int line;
@@ -66,15 +66,15 @@ typedef struct globals
 	stack_t *head;
 	FILE *fdes;
 	char *buffer;
-} glob_v;
+} global_t;
 
-extern glob_v global_var;
+extern global_t global_var;
 
 /*	Basic Monty Opcode Functions	*/
 stack_t *add_endnode(stack_t **head, const int n);
 stack_t *add_leadnode(stack_t **head, const int n);
 void free_node(stack_t *head);
-void (*sel_func(char *code))(stack_t **stack, unsigned int count);
+void (*sel_func(char *code))(stack_t **head, unsigned int c);
 
 /*	Instruction Code	*/
 void o_push(stack_t **head, unsigned int c);
@@ -103,7 +103,7 @@ int _search(char *str, char c);
 
 /*	Main Monty Opcode Functions	*/
 void free_globalvar(void);
-void globalvar_int(FILE *des);
+void globalvar_init(FILE *des);
 FILE *check(int argc, char *argv[]);
 int main(int argc, char *argv[]);
 #endif /** MONTY_HEADER_FILE **/

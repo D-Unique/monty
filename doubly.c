@@ -96,11 +96,11 @@ void free_node(stack_t *head)
 /**
  * sel_func - A function that select the right function to perform
  * required operation on given opcode.
- * @code: opcode
+ * @code: The opcode passed to the function
  *
  * Return: A pointer to the function that executes the opcode
  */
-void (*sel_func(char *code))(stack_t **stack, unsigned int count)
+void (*sel_func(char *code))(stack_t **head, unsigned int c)
 {
 	instruction_t instruct[] = {
 		{"push", o_push},
@@ -122,12 +122,12 @@ void (*sel_func(char *code))(stack_t **stack, unsigned int count)
 		{"rotr", o_rotr},
 		{NULL, NULL}
 	};
-	int c;
+	int a;
 
-	for (c = 0; instruct[c].opcode; c++)
+	for (a = 0; instruct[a].opcode; a++)
 	{
-		if (_strcmp(instruct[c].opcode, code) == 0)
+		if (_strcmp(instruct[a].opcode, code) == 0)
 			break;
 	}
-	return (instruct[c].f);
+	return (instruct[a].f);
 }

@@ -1,5 +1,7 @@
 #include "monty.h"
 
+global_t global_var;
+
 /**
  * free_globalvar - A function that free up global variable
  *

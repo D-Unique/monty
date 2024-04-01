@@ -113,7 +113,7 @@ void o_pop(stack_t **head, unsigned int c)
  * @c: The count of the line number
  * Return: nothing
  */
-void _swap(stack_t **head, unsigned int c)
+void o_swap(stack_t **head, unsigned int c)
 {
 	int n = 0;
 	stack_t *buf = NULL;
