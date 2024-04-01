@@ -6,7 +6,7 @@
  *
  * Return: nothing
  */
-void *_calloc(unsigned int nmemb, unsigned int typ)
+void *_calloc(unsigned int nmemb, unsigned int type)
 {
 	void *buf = NULL;
 	unsigned int i;
@@ -62,7 +62,7 @@ void *_realloc(void *p, unsigned int old, unsigned int new)
 		if (!buf)
 			return (NULL);
 		for (i = 0; i < new; i++)
-			buf[i] = *((char *)ptr + i);
+			buf[i] = *((char *)p + i);
 		free(p);
 	}
 	return (buf);

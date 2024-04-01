@@ -4,39 +4,39 @@
  * add_endnode - A function that add node at the end of a
  * doubly linked list.
  * @head: The first position of the linked list
- * @e: The data to store
+ * @n: The data to store
  *
  * Return: A doubly linked list
  */
-stack_t add_endnode(stack_t **head, const int e)
+stack_t *add_endnode(stack_t **head, const int n)
 {
-	stack_t *tmp, *buff;
+	stack_t *newnode, *buff;
 
 	if (head == NULL)
 		return (NULL);
-	tmp = malloc(sizeof(stack_t));
-	if (!tmp)
+	newnode = malloc(sizeof(stack_t));
+	if (!newnode)
 	{
 		dprintf(2, "Error: malloc failed\n");
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
-	tmp->e = e;
+	newnode->n = n;
 
 	if (*head == NULL)
 	{
-		tmp->next = *head;
-		tmp->prev = NULL;
-		*head = tmp;
+		newnode->next = *head;
+		newnode->prev = NULL;
+		*head = newnode;
 		return (*head);
 	}
 
 	buff = *head;
 	while (buff->next)
 		buff = buff->next;
-	tmp->next = buff->next;
-	tmp->prev = buff;
-	buff->next = tmp;
+	newnode->next = buff->next;
+	newnode->prev = buff;
+	buff->next = newnode;
 	return (buff->next);
 }
 
@@ -44,35 +44,35 @@ stack_t add_endnode(stack_t **head, const int e)
  * add_leadnode - A function that add a node at the beginning of
  * a doubly linked list
  * @head: The head of the doubly linked list
- * @e: The data to be stored
+ * @n: The data to be stored
  *
  * Return: A doubly linked list
  */
-stack_t *add_leadnode(stack_t **head, const int e)
+stack_t *add_leadnode(stack_t **head, const int n)
 {
-	stack_t *buf;
+	stack_t *newnode;
 
 	if (head == NULL)
 		return (NULL);
-	buf = malloc(sizeof(stack_t));
-	if (!buf)
+	newnode = malloc(sizeof(stack_t));
+	if (!newnode)
 	{
 		dprintf(2, "Error: malloc failed\n");
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
-	buf->e = e;
+	newnode->n = n;
 	if (*head == NULL)
 	{
-		buf->next = *head;
-		buf->prev = NULL;
-		*head = buf;
+		newnode->next = *head;
+		newnode->prev = NULL;
+		*head = newnode;
 		return (*head);
 	}
-	(*head)->prev = buf;
-	buf->next = (*head);
-	buf->prev = NULL;
-	*head = buf;
+	(*head)->prev = newnode;
+	newnode->next = (*head);
+	newnode->prev = NULL;
+	*head = newnode;
 	return (*head);
 }
 
@@ -103,23 +103,23 @@ void free_node(stack_t *head)
 void (*sel_func(char *code))(stack_t **stack, unsigned int count)
 {
 	instruction_t instruct[] = {
-		{"push", _push},
-		{"pall", _pall},
-		{"pint", _pint},
-		{"pop", _pop},
-		{"swap", _swap},
-		{"queue", _queue},
-		{"stack", _stack},
-		{"add", _add},
-		{"nop", _nop},
-		{"sub", _sub},
-		{"mul", _mul},
-		{"div", _div},
-		{"mod", _mod},
-		{"pchar", _pchar},
-		{"pstr", _pstr},
-		{"rotl", _rotl},
-		{"rotr", _rotr},
+		{"push", o_push},
+		{"pall", o_pall},
+		{"pint", o_pint},
+		{"pop", o_pop},
+		{"swap", o_swap},
+		{"queue", o_queue},
+		{"stack", o_stack},
+		{"add", o_add},
+		{"nop", o_nop},
+		{"sub", o_sub},
+		{"mul", o_mul},
+		{"div", o_div},
+		{"mod", o_mod},
+		{"pchar", o_pchar},
+		{"pstr", o_pstr},
+		{"rotl", o_rotl},
+		{"rotr", o_rotr},
 		{NULL, NULL}
 	};
 	int c;

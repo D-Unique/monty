@@ -26,7 +26,7 @@ void globalvar_init(FILE *fdes)
 	global_var.arg = NULL;
 	global_var.head = NULL;
 	global_var.fdes = fdes;
-	global_var.buff = NULL;
+	global_var.buffer = NULL;
 }
 
 /**
@@ -42,7 +42,7 @@ FILE *check(int argc, char *argv[])
 
 	if (argc == 1 || argc > 2)
 	{
-		dprint(2, "USAGE: monty file\n");
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -66,7 +66,7 @@ FILE *check(int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
-	void (*f)(stack_t **stack, unsigned int line_number);
+	void (*f)(stack_t **stack, unsigned int c);
 	FILE *fdes;
 	size_t sz = 256;
 	ssize_t line_no = 0;
@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
 
 	fdes = check(argc, argv);
 	globalvar_init(fdes);
-	line_no = getline(&global_var.buff, &sz, fdes);
+	line_no = getline(&global_var.buffer, &sz, fdes);
 	while (line_no >= 0)
 	{
-		line[0] = _strngcut(global_var.buff, " \t\n");
+		line[0] = _strngcut(global_var.buffer, " \t\n");
 		if (line[0] && line[0][0] != '#')
 		{
 			f = sel_func(line[0]);
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 			global_var.arg = _strngcut(NULL, " \t\n");
 			f(&global_var.head, global_var.line);
 		}
-		line_no = getline(&global_var.buff, &sz, fdes);
+		line_no = getline(&global_var.buffer, &sz, fdes);
 		global_var.line++;
 	}
 

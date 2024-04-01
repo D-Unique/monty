@@ -1,15 +1,15 @@
-#include "monty"
+#include "monty.h"
 
 /**
- * _push - An opcode that pushes an element to the stack
+ * o_push - An opcode that pushes an element to the stack
  * @head: The head of the linked list
  * @c: counter of the line number
  *
  * Return: nothing
  */
-void _push(stack_t **head, unsigned int c)
+void o_push(stack_t **head, unsigned int c)
 {
-	int p, r, flag = 0;
+	int p, r;
 
 	if (!global_var.arg)
 	{
@@ -23,8 +23,8 @@ void _push(stack_t **head, unsigned int c)
 	{
 		if (!isdigit(global_var.arg[r]) && global_var.arg[r] != '-')
 		{
-			dprint(2, "L%u: ", c);
-			dprint(2, "usage: push integer\n");
+			dprintf(2, "L%u: ", c);
+			dprintf(2, "usage: push integer\n");
 			free_globalvar();
 			exit(EXIT_FAILURE);
 		}
@@ -39,14 +39,14 @@ void _push(stack_t **head, unsigned int c)
 }
 
 /**
- * _pall - A function that prints the values on the stack
+ * o_pall - A function that prints the values on the stack
  *
  * @head: The head of the doubly linked list
  * @c: The count of the line number
  *
  * Return: nothing
  */
-void _pall(stack_t **head, unsigned int c)
+void o_pall(stack_t **head, unsigned int c)
 {
 	stack_t *buf;
 	(void)c;
@@ -55,13 +55,13 @@ void _pall(stack_t **head, unsigned int c)
 
 	while (buf)
 	{
-		printf("%d\n", buf->e);
+		printf("%d\n", buf->n);
 		buf = buf->next;
 	}
 }
 
 /**
- * _pint - A function that prints the value of data at the
+ * o_pint - A function that prints the value of data at the
  * top of the stack
  *
  * @head: The head of the doubly linked list
@@ -69,7 +69,7 @@ void _pall(stack_t **head, unsigned int c)
  *
  * Return: nothing
  */
-void _pint(stack_t **head, unsigned int c)
+void o_pint(stack_t **head, unsigned int c)
 {
 	(void)c;
 
@@ -85,13 +85,13 @@ void _pint(stack_t **head, unsigned int c)
 }
 
 /**
- * _pop - A function that removes the topmost element from the stack
+ * o_pop - A function that removes the topmost element from the stack
  * @head: The head of the doubly linked list
  * @c: The count of the line
  *
  * Return: nothing
  */
-void _pop(stack_t **head, unsigned int c)
+void o_pop(stack_t **head, unsigned int c)
 {
 	stack_t *buf;
 
@@ -107,7 +107,7 @@ void _pop(stack_t **head, unsigned int c)
 }
 
 /**
- * _swap - A function that swaps the top two elements of a
+ * o_swap - A function that swaps the top two elements of a
  * given stack
  * @head: The head of the doubly linked list
  * @c: The count of the line number
@@ -128,8 +128,8 @@ void _swap(stack_t **head, unsigned int c)
 
 	if (n < 2)
 	{
-		dprintf(2, "L%u: can't swap, stack too short\n", c)
-			free_globalvar();
+		dprintf(2, "L%u: can't swap, stack too short\n", c);
+		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
 
