@@ -4,6 +4,10 @@
 #define _POSIX_C_SOURCE 2000809L
 #define _GNU_SOURCE
 
+#define STACK 0
+#define QUEUE 1
+#define DELIMS " \n\t\a\b"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -56,50 +60,51 @@ typedef struct instruction_s
  * @buff: buffer that holds the input text
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO project
+ * for stack, queues, LIFO, FIFO
  */
 typedef struct global_s
 {
 	int quest;
-	unsigned int line;
 	char  *arg;
 	stack_t *head;
+	unsigned int line;
 	FILE *fdes;
 	char *buffer;
 } global_t;
 
 extern global_t global_var;
 
-/*	Basic Monty Opcode Functions	*/
+/*	Basic Monty Functions Code	*/
 stack_t *add_endnode(stack_t **head, const int n);
 stack_t *add_leadnode(stack_t **head, const int n);
 void free_node(stack_t *head);
-void (*sel_func(char *code))(stack_t **head, unsigned int c);
+void (*sel_func(char *code)) (stack_t **head, unsigned int c);
 
-/*	Instruction Code	*/
-void o_push(stack_t **head, unsigned int c);
-void o_pall(stack_t **head, unsigned int c);
-void o_pint(stack_t **head, unsigned int c);
-void o_pop(stack_t **head, unsigned int c);
-void o_swap(stack_t **head, unsigned int c);
-void o_queue(stack_t **head, unsigned int c);
-void o_stack(stack_t **head, unsigned int c);
-void o_add(stack_t **head, unsigned int c);
-void o_nop(stack_t **head, unsigned int c);
-void o_sub(stack_t **head, unsigned int c);
-void o_div(stack_t **head, unsigned int c);
-void o_mul(stack_t **head, unsigned int c);
-void o_mod(stack_t **head, unsigned int c);
-void o_pchar(stack_t **head, unsigned int c);
-void o_pstr(stack_t **head, unsigned int c);
-void o_rotl(stack_t **head, unsigned int c);
-void o_rotr(stack_t **head, unsigned int c);
+/*	Monty Interpreter Functions Code	*/
+void opcode_push(stack_t **head, unsigned int c);
+void opcode_pall(stack_t **head, unsigned int c);
+void opcode_pint(stack_t **head, unsigned int c);
+void opcode_pop(stack_t **head, unsigned int c);
+void opcode_swap(stack_t **head, unsigned int c);
+void opcode_queue(stack_t **head, unsigned int c);
+void opcode_stack(stack_t **head, unsigned int c);
+void opcode_add(stack_t **head, unsigned int c);
+void opcode_nop(stack_t **head, unsigned int c);
+void opcode_sub(stack_t **head, unsigned int c);
+void opcode_div(stack_t **head, unsigned int c);
+void opcode_mul(stack_t **head, unsigned int c);
+void opcode_mod(stack_t **head, unsigned int c);
+void opcode_pchar(stack_t **head, unsigned int c);
+void opcode_pstr(stack_t **head, unsigned int c);
+void opcode_rotl(stack_t **head, unsigned int c);
+void opcode_rotr(stack_t **head, unsigned int c);
 
 
 /*	Other Basic Important Functions For Opcode Operation	*/
 char *_strngcut(char *str, char *de);
 int _strcmp(char *s1, char *s2);
 int _search(char *str, char c);
+int check_number(char *str);
 
 /*	Main Monty Opcode Functions	*/
 void free_globalvar(void);

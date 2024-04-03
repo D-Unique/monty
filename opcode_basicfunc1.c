@@ -1,5 +1,4 @@
 #include "monty.h"
-
 /**
  * add_endnode - A function that add node at the end of a
  * doubly linked list.
@@ -17,7 +16,7 @@ stack_t *add_endnode(stack_t **head, const int n)
 	newnode = malloc(sizeof(stack_t));
 	if (!newnode)
 	{
-		dprintf(2, "Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
@@ -57,11 +56,12 @@ stack_t *add_leadnode(stack_t **head, const int n)
 	newnode = malloc(sizeof(stack_t));
 	if (!newnode)
 	{
-		dprintf(2, "Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		free_globalvar();
 		exit(EXIT_FAILURE);
 	}
 	newnode->n = n;
+
 	if (*head == NULL)
 	{
 		newnode->next = *head;
@@ -76,22 +76,6 @@ stack_t *add_leadnode(stack_t **head, const int n)
 	return (*head);
 }
 
-/**
- * free_node - A function that freed doubly linked list
- * @head: Head of the doubly linked list
- *
- * Return: Return nothing
- */
-void free_node(stack_t *head)
-{
-	stack_t *buf;
-
-	while ((buf = head) != NULL)
-	{
-		head = head->next;
-		free(buf);
-	}
-}
 
 /**
  * sel_func - A function that select the right function to perform
@@ -100,34 +84,33 @@ void free_node(stack_t *head)
  *
  * Return: A pointer to the function that executes the opcode
  */
-void (*sel_func(char *code))(stack_t **head, unsigned int c)
+void (*sel_func(char *code)) (stack_t **head, unsigned int c)
 {
 	instruction_t instruct[] = {
-		{"push", o_push},
-		{"pall", o_pall},
-		{"pint", o_pint},
-		{"pop", o_pop},
-		{"swap", o_swap},
-		{"queue", o_queue},
-		{"stack", o_stack},
-		{"add", o_add},
-		{"nop", o_nop},
-		{"sub", o_sub},
-		{"mul", o_mul},
-		{"div", o_div},
-		{"mod", o_mod},
-		{"pchar", o_pchar},
-		{"pstr", o_pstr},
-		{"rotl", o_rotl},
-		{"rotr", o_rotr},
+		{"push", opcode_push},
+		{"pall", opcode_pall},
+		{"pint", opcode_pint},
+		{"pop", opcode_pop},
+		{"swap", opcode_swap},
+		{"queue", opcode_queue},
+		{"stack", opcode_stack},
+		{"add", opcode_add},
+		{"nop", opcode_nop},
+		{"sub", opcode_sub},
+		{"mul", opcode_mul},
+		{"div", opcode_div},
+		{"mod", opcode_mod},
+		{"pchar", opcode_pchar},
+		{"pstr", opcode_pstr},
+		{"rotl", opcode_rotl},
+		{"rotr", opcode_rotr},
 		{NULL, NULL}
 	};
 	int a;
 
 	for (a = 0; instruct[a].opcode; a++)
-	{
 		if (_strcmp(instruct[a].opcode, code) == 0)
 			break;
-	}
 	return (instruct[a].f);
 }
+

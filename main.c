@@ -15,6 +15,24 @@ void free_globalvar(void)
 }
 
 /**
+ * free_node - A function that free the buffer of the doubly
+ * linked list
+ * @head: The head of the doubly linked list
+ * 
+ * Return: nothing
+ */
+void free_node (stack_t *head)
+{
+	stack_t *buff;
+
+	while (head != NULL)
+	{
+		buff = head;
+		head = head->next;
+		free(buff);
+	}
+}
+ /**
  * globalvar_init - A function that initialise the global variable
  *
  * @fdes: file descriptor
@@ -32,19 +50,20 @@ void globalvar_init(FILE *fdes)
 }
 
 /**
- * check - A function that checks if a file exit and can be opened
- * @argc: count of the argument
- * @argv: Argument array vector
+ * check -  A function that check the input and confirm if file
+ * exist and can be opened.
+ * @argc: Count of the number of arguments
+ * @argv: The array vector containing the arguments
  *
- * Return: file struct
+ * Result: nothing
  */
 FILE *check(int argc, char *argv[])
 {
 	FILE *fdes;
-
-	if (argc == 1 || argc > 2)
+	
+	if (argc != 2)
 	{
-		dprintf(2, "USAGE: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -52,12 +71,11 @@ FILE *check(int argc, char *argv[])
 
 	if (fdes == NULL)
 	{
-		dprintf(2, "Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	return (fdes);
 }
-
 /**
  * main - The main function
  *
@@ -68,35 +86,34 @@ FILE *check(int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
-	void (*f)(stack_t **stack, unsigned int c);
+	void (*f)(stack_t **stack, unsigned int line_number);
 	FILE *fdes;
-	size_t sz = 256;
+	size_t siz = 256;
 	ssize_t line_no = 0;
-	char *line[2] = {NULL, NULL};
+	char *code[2] = {NULL, NULL};
 
-	fdes = check(argc, argv);
+	fdes = check(argc, argv);	
+
 	globalvar_init(fdes);
-	line_no = getline(&global_var.buffer, &sz, fdes);
-	while (line_no >= 0)
+	line_no = getline(&global_var.buffer, &siz, fdes);
+	while (line_no != -1)
 	{
-		line[0] = _strngcut(global_var.buffer, " \t\n");
-		if (line[0] && line[0][0] != '#')
+		code[0] = _strngcut(global_var.buffer, " \t\r\n\a");
+		if (code[0] && code[0][0] != '#')
 		{
-			f = sel_func(line[0]);
+			f = sel_func(code[0]);
 			if (!f)
 			{
-				dprintf(2, "L%u: ", global_var.line);
-				dprintf(2, "unknown instruction %s\n", line[0]);
+				fprintf(stderr, "L%d: unknown instruction %s\n ", global_var.line, code[0]);
 				free_globalvar();
 				exit(EXIT_FAILURE);
 			}
 			global_var.arg = _strngcut(NULL, " \t\n");
 			f(&global_var.head, global_var.line);
 		}
-		line_no = getline(&global_var.buffer, &sz, fdes);
+		line_no = getline(&global_var.buffer, &siz, fdes);
 		global_var.line++;
 	}
-
 	free_globalvar();
 	return (0);
 }

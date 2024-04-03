@@ -89,3 +89,25 @@ char *_strngcut(char *str, char *de)
 	}
 	return (NULL);
 }
+
+/**
+ * check_number - A function that check if a string is a number
+ * @str: The string to check
+ *
+ * Return: 1 if string is a number and 0 for otherwise
+ */
+int check_number(char *str)
+{
+	if (str == NULL || *str == '\0')
+		return (0);
+	if(*str == '-' || *str == '+')
+		str++;
+
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
+}

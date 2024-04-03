@@ -1,20 +1,22 @@
 #include "monty.h"
 
 /**
- * o_rotl - A function that rotate the topmost element to the bottom
+ * opcode_rotl - A function that rotate the topmost element to the bottom
  * and rotate the second element to the top.
  * @head; The head of the doubly linked list
  * @c: The count of the number line
  *
  * Return: nothing
  */
-void o_rotl(stack_t **head, unsigned int c)
+void opcode_rotl(stack_t **head, unsigned int c)
 {
 	stack_t *buff = NULL;
 	stack_t *buf = NULL;
 	(void)c;
 
 	if (*head == NULL)
+		return;
+	if ((*head)->next == NULL)
 		return;
 
 	buff = (*head)->next;
@@ -31,14 +33,14 @@ void o_rotl(stack_t **head, unsigned int c)
 }
 
 /**
- * o_rotr - A function that rotates the elements on the stack
+ * opcode_rotr - A function that rotates the elements on the stack
  * in reverse order.
  * @head: The head of the doubly linked list
  * @c: The count of the line number
  *
  * Return:nothing
  */
-void o_rotr(stack_t **head, unsigned int c)
+void opcode_rotr(stack_t **head, unsigned int c)
 {
 	stack_t *node = NULL;
 	(void)c;
@@ -60,4 +62,3 @@ void o_rotr(stack_t **head, unsigned int c)
 	(*head)->prev = node;
 	*head = node;
 }
-
